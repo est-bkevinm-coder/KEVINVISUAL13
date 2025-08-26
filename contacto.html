@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TecnoVisión S.A. - Contacto</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-sA+z3cXn6m0FMr1x40Q06p7o0uWv4hWv8n2Ml8vmPaM="
+    crossorigin=""
+  />
+  <style>
+    #map { height: 400px; margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">TecnoVisión S.A.</div>
+  <nav id="navbar">
+    <a href="index.html">Inicio</a>
+    <a href="galeria.html">Galería</a>
+    <a href="presupuesto.html">Presupuesto</a>
+    <a href="contacto.html" class="active">Contacto</a>
+  </nav>
+</header>
+
+<main>
+  <section id="contacto">
+    <h2>Contacto</h2>
+    <p><strong>Dirección:</strong> Calle Falsa 123, Ciudad</p>
+    <p><strong>Teléfono:</strong> +505 1234 5678</p>
+    <p><strong>Email:</strong> contacto@tecnovision.com</p>
+
+    <div id="map"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="redes">
+    <a href="https://www.facebook.com" target="_blank">Facebook</a> |
+    <a href="https://www.twitter.com" target="_blank">Twitter</a> |
+    <a href="https://www.instagram.com" target="_blank">Instagram</a>
+  </div>
+  <p>Dirección: Calle Falsa 123, Ciudad</p>
+  <p>Aviso legal © 2025 TecnoVisión S.A.</p>
+</footer>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-oK5aX+JLRwEm5vZOxdr5XPd2F7aYQ1qT8c6R9jR0vQo="
+  crossorigin=""
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const map = L.map('map').setView([12.1357, -86.2514], 13); // Coordenadas de Managua, Nicaragua
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    const marker = L.marker([12.1357, -86.2514]).addTo(map)
+      .bindPopup('<b>TecnoVisión S.A.</b><br>Calle Falsa 123, Ciudad').openPopup();
+  });
+</script>
+</body>
+</html>

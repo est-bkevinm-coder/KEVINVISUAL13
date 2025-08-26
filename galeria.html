@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería con Categorías y Carrito</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+    h1 {
+      color: #004080;
+    }
+    .filtros {
+      margin-bottom: 20px;
+    }
+    .filtros button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #004080;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .galeria {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .producto {
+      width: 300px;
+      background-color: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      text-align: left;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .producto h3 {
+      margin: 10px 0 5px;
+      color: #004080;
+    }
+    .producto p {
+      margin: 5px 0;
+    }
+    .precio {
+      font-weight: bold;
+      color: #008000;
+    }
+    .carrito {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      background-color: #004080;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1100;
+    }
+    .btn-carrito {
+      margin-top: 10px;
+      background-color: #008000;
+      color: white;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    #metodosPago button {
+      margin: 5px;
+      padding: 8px 15px;
+      border: none;
+      background-color: #004080;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #mensajePago {
+      margin-top: 10px;
+      color: green;
+      font-weight: bold;
+    }
+    #formularioCliente input {
+      margin-bottom: 8px;
+      width: 100%;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    #formularioCliente button {
+      margin-top: 10px;
+      background-color: #008000;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="carrito">🛒 Carrito: <span id="contador">0</span></div>
+
+  <h1>Galería de Productos</h1>
+
+  <div class="filtros">
+    <button onclick="filtrar('todos')">Todos</button>
+    <button onclick="filtrar('laptop')">Laptops</button>
+    <button onclick="filtrar('impresora')">Impresoras</button>
+    <button onclick="filtrar('monitor')">Monitores</button>
+    <button onclick="filtrar('teclado')">Teclados</button>
+    <button onclick="filtrar('camara')">Cámaras</button>
+    <button onclick="filtrar('bocina')">Bocinas</button>
+    <button onclick="filtrar('router')">Routers</button>
+    <button onclick="filtrar('mouse')">Mouse</button>
+    <button onclick="filtrar('audifono')">Audífonos</button>
+    <button onclick="filtrar('accesorio')">Accesorios</button>
+  </div>
+
+  <div class="galeria" id="galeria">
+    <!-- Productos existentes -->
+    <div class="producto laptop">
+      <img src="img/laptop.jpg" alt="Laptop">
+      <h3>Laptop Profesional</h3>
+      <p class="precio">$980.00</p>
+      <p>Potente equipo portátil para trabajo y estudio.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto impresora">
+      <img src="img/impresora.jpg" alt="Impresora">
+      <h3>Impresora Multifuncional</h3>
+      <p class="precio">$220.00</p>
+      <p>Imprime, escanea y copia con rapidez.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto accesorio">
+      <img src="img/mouse.jpg" alt="Mouse">
+      <h3>Mouse Inalámbrico</h3>
+      <p class="precio">$18.00</p>
+      <p>Diseño ergonómico y batería duradera.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto laptop">
+      <img src="img/laptop2.jpg" alt="Laptop económica">
+      <h3>Laptop Estudiante</h3>
+      <p class="precio">$620.00</p>
+      <p>Ideal para tareas básicas y navegación.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto impresora">
+      <img src="img/impresora2.jpg" alt="Impresora láser">
+      <h3>Impresora Láser</h3>
+      <p class="precio">$340.00</p>
+      <p>Alta velocidad y calidad profesional.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto audifono">
+      <img src="img/audifono.jpg" alt="Audífonos">
+      <h3>Audífonos Bluetooth</h3>
+      <p class="precio">$35.00</p>
+      <p>Sonido envolvente y batería de larga duración.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto accesorio">
+      <img src="img/monitor.jpg" alt="Monitor">
+      <h3>Monitor LED 24"</h3>
+      <p class="precio">$180.00</p>
+      <p>Resolución Full HD con colores vivos.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <!-- Productos nuevos -->
+    <div class="producto monitor">
+      <img src="img/monitor3.jpg" alt="Monitor Samsung 27">
+      <h3>Monitor Samsung 27"</h3>
+      <p class="precio">$210.00</p>
+      <p>Pantalla LED Full HD, ideal para oficina y gaming.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto monitor">
+      <img src="img/monitor2.jpg" alt="Monitor LG UltraWide">
+      <h3>Monitor LG UltraWide 29"</h3>
+      <p class="precio">$320.00</p>
+      <p>Formato panorámico para multitarea y diseño gráfico.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto monitor">
+      <img src="img/monitor3.jpg" alt="Monitor HP 22">
+      <h3>Monitor HP 22"</h3>
+      <p class="precio">$150.00</p>
+      <p>Compacto y eficiente para espacios pequeños.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto teclado">
+      <img src="img/teclado1.jpg" alt="Teclado Mecánico RGB">
+      <h3>Teclado Mecánico RGB</h3>
+      <p class="precio">$45.00</p>
+      <p>Iluminación personalizable y alta durabilidad.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto teclado">
+      <img src="img/teclado2.jpg" alt="Teclado Inalámbrico Logitech">
+      <h3>Teclado Inalámbrico Logitech</h3>
+      <p class="precio">$28.00</p>
+      <p>Conexión Bluetooth y batería de larga duración.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto teclado">
+      <img src="img/teclado3.jpg" alt="Teclado Numérico USB">
+      <h3>Teclado Numérico USB</h3>
+      <p class="precio">$15.00</p>
+      <p>Ideal para tareas contables y de oficina.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto camara">
+      <img src="img/camara1.jpg" alt="Cámara Web HD">
+      <h3>Cámara Web HD</h3>
+      <p class="precio">$32.00</p>
+      <p>Videollamadas nítidas y micrófono integrado.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto camara">
+      <img src="img/camara2.jpg" alt="Cámara de Seguridad WiFi">
+      <h3>Cámara de Seguridad WiFi</h3>
+      <p class="precio">$65.00</p>
+      <p>Vigilancia remota desde tu celular.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto bocina">
+      <img src="img/bocina1.jpg" alt="Bocina Bluetooth JBL">
+      <h3>Bocina Bluetooth JBL</h3>
+      <p class="precio">$55.00</p>
+      <p>Sonido potente y resistente al agua.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto bocina">
+      <img src="img/bocina2.jpg" alt="Bocina Portátil Sony">
+      <h3>Bocina Portátil Sony</h3>
+      <p class="precio">$48.00</p>
+      <p>Compacta, ideal para exteriores y viajes.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto router">
+      <img src="img/router1.jpg" alt="Router TP-Link AC1200">
+      <h3>Router TP-Link AC1200</h3>
+      <p class="precio">$39.00</p>
+      <p>WiFi rápido para toda la casa.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto router">
+      <img src="img/router2.jpg" alt="Router Mesh Xiaomi">
+      <h3>Router Mesh Xiaomi</h3>
+      <p class="precio">$75.00</p>
+      <p>Cobertura total y fácil instalación.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto mouse">
+      <img src="img/mouse2.jpg" alt="Mouse Gamer Redragon">
+      <h3>Mouse Gamer Redragon</h3>
+      <p class="precio">$29.00</p>
+      <p>Alta precisión y luces LED.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto mouse">
+      <img src="img/mouse3.jpg" alt="Mouse Vertical Ergonómico">
+      <h3>Mouse Vertical Ergonómico</h3>
+      <p class="precio">$22.00</p>
+      <p>Previene molestias en la muñeca.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto impresora">
+      <img src="img/impresora3.jpg" alt="Impresora Epson EcoTank">
+      <h3>Impresora Epson EcoTank</h3>
+      <p class="precio">$410.00</p>
+      <p>Impresión económica y sin cartuchos.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto laptop">
+      <img src="img/laptop3.jpg" alt="Laptop Gamer ASUS">
+      <h3>Laptop Gamer ASUS</h3>
+      <p class="precio">$1200.00</p>
+      <p>Gráficos avanzados y alto rendimiento.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto audifono">
+      <img src="img/audifono2.jpg" alt="Audífonos Sony WH-1000XM4">
+      <h3>Audífonos Sony WH-1000XM4</h3>
+      <p class="precio">$210.00</p>
+      <p>Cancelación de ruido y sonido premium.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto accesorio">
+      <img src="img/usb.jpg" alt="Memoria USB 64GB">
+      <h3>Memoria USB 64GB</h3>
+      <p class="precio">$12.00</p>
+      <p>Almacenamiento portátil y rápido.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+
+    <div class="producto accesorio">
+      <img src="img/hub.jpg" alt="Hub USB 4 Puertos">
+      <h3>Hub USB 4 Puertos</h3>
+      <p class="precio">$18.00</p>
+      <p>Conecta varios dispositivos a la vez.</p>
+      <button class="btn-carrito" onclick="agregarCarrito(event)">Agregar al carrito</button>
+    </div>
+  </div>
+
+  <!-- Modal Carrito -->
+  <div id="modalCarrito" style="display:none; position:fixed; top:60px; right:40px; background:white; color:#004080; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2); padding:20px; z-index:1000;">
+    <h3>Productos en el carrito</h3>
+    <ul id="listaCarrito"></ul>
+    <button onclick="mostrarFormulario()" style="margin-top:10px;">Comprar</button>
+    <button onclick="cerrarModalCarrito()" style="margin-top:10px;">Cerrar</button>
+
+    <form id="formularioCliente" style="display:none; margin-top:15px; text-align:left;">
+      <h4>Datos para la entrega en Nicaragua:</h4>
+      <label>Nombre completo:<br>
+        <input type="text" id="nombreCliente" required>
+      </label><br>
+      <label>Teléfono:<br>
+        <input type="tel" id="telefonoCliente" required>
+      </label><br>
+      <label>Dirección:<br>
+        <input type="text" id="direccionCliente" required>
+      </label><br>
+      <button type="button" onclick="enviarDatosCliente()">Continuar</button>
+    </form>
+
+    <div id="metodosPago" style="display:none; margin-top:15px;">
+      <h4>Selecciona un método de pago:</h4>
+      <button onclick="pagar('Tarjeta de crédito/débito')">Tarjeta de crédito/débito</button>
+      <button onclick="pagar('PayPal')">PayPal</button>
+      <button onclick="pagar('Transferencia bancaria')">Transferencia bancaria</button>
+      <div id="mensajePago"></div>
+    </div>
+  </div>
+
+  <script>
+    function filtrar(categoria) {
+      const productos = document.querySelectorAll('.producto');
+      productos.forEach(p => {
+        if (categoria === 'todos' || p.classList.contains(categoria)) {
+          p.style.display = 'block';
+        } else {
+          p.style.display = 'none';
+        }
+      });
+    }
+
+    let contador = 0;
+    let productosCarrito = [];
+
+    function agregarCarrito(event) {
+      contador++;
+      document.getElementById('contador').innerText = contador;
+
+      const producto = event.target.closest('.producto');
+      const nombre = producto.querySelector('h3').innerText;
+      productosCarrito.push(nombre);
+    }
+
+    document.querySelector('.carrito').onclick = function() {
+      const lista = document.getElementById('listaCarrito');
+      lista.innerHTML = '';
+      if (productosCarrito.length === 0) {
+        lista.innerHTML = '<li>No hay productos en el carrito.</li>';
+      } else {
+        productosCarrito.forEach(p => {
+          const li = document.createElement('li');
+          li.innerText = p;
+          lista.appendChild(li);
+        });
+      }
+      document.getElementById('modalCarrito').style.display = 'block';
+      document.getElementById('formularioCliente').style.display = 'none';
+      document.getElementById('metodosPago').style.display = 'none';
+      document.getElementById('mensajePago').innerText = '';
+    };
+
+    function cerrarModalCarrito() {
+      document.getElementById('modalCarrito').style.display = 'none';
+      document.getElementById('formularioCliente').style.display = 'none';
+      document.getElementById('metodosPago').style.display = 'none';
+      document.getElementById('mensajePago').innerText = '';
+    }
+
+    function mostrarFormulario() {
+      document.getElementById('formularioCliente').style.display = 'block';
+      document.getElementById('metodosPago').style.display = 'none';
+      document.getElementById('mensajePago').innerText = '';
+    }
+
+    function enviarDatosCliente() {
+      const nombre = document.getElementById('nombreCliente').value.trim();
+      const telefono = document.getElementById('telefonoCliente').value.trim();
+      const direccion = document.getElementById('direccionCliente').value.trim();
+      if (!nombre || !telefono || !direccion) {
+        alert('Por favor, completa todos los datos.');
+        return;
+      }
+      document.getElementById('formularioCliente').style.display = 'none';
+      document.getElementById('metodosPago').style.display = 'block';
+    }
+
+    function pagar(metodo) {
+      document.getElementById('mensajePago').innerText =
+        '¡Gracias por tu compra! Pago realizado con ' + metodo +
+        '. Pronto te contactaremos para la entrega en Nicaragua.';
+    }
+    function agregarCarrito(event) {
+  contador++;
+  document.getElementById('contador').innerText = contador;
+
+  const producto = event.target.closest('.producto');
+  const nombre = producto.querySelector('h3').innerText;
+  const imagen = producto.querySelector('img').src; // Guardamos la URL de la imagen
+  productosCarrito.push({nombre: nombre, img: imagen}); // Guardamos como objeto
+}
+
+document.querySelector('.carrito').onclick = function() {
+  const lista = document.getElementById('listaCarrito');
+  lista.innerHTML = '';
+  if (productosCarrito.length === 0) {
+    lista.innerHTML = '<li>No hay productos en el carrito.</li>';
+  } else {
+    productosCarrito.forEach(p => {
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.alignItems = 'center';
+      li.style.marginBottom = '10px';
+      
+      const img = document.createElement('img');
+      img.src = p.img;
+      img.style.width = '50px';
+      img.style.height = '50px';
+      img.style.marginRight = '10px';
+      img.style.borderRadius = '5px';
+      
+      li.appendChild(img);
+      li.appendChild(document.createTextNode(p.nombre));
+      lista.appendChild(li);
+    });
+  }
+  document.getElementById('modalCarrito').style.display = 'block';
+  document.getElementById('formularioCliente').style.display = 'none';
+  document.getElementById('metodosPago').style.display = 'none';
+  document.getElementById('mensajePago').innerText = '';
+};
+document.querySelector('.carrito').onclick = function() {
+  const lista = document.getElementById('listaCarrito');
+  lista.innerHTML = '';
+  if (productosCarrito.length === 0) {
+    lista.innerHTML = '<li>No hay productos en el carrito.</li>';
+  } else {
+    productosCarrito.forEach((p, index) => {
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.alignItems = 'center';
+      li.style.marginBottom = '10px';
+      
+      const img = document.createElement('img');
+      img.src = p.img;
+      img.style.width = '50px';
+      img.style.height = '50px';
+      img.style.marginRight = '10px';
+      img.style.borderRadius = '5px';
+      
+      const nombreText = document.createElement('span');
+      nombreText.innerText = p.nombre;
+      nombreText.style.flex = '1';
+      
+      const btnQuitar = document.createElement('button');
+      btnQuitar.innerText = 'Quitar';
+      btnQuitar.style.backgroundColor = '#ff0000';
+      btnQuitar.style.color = 'white';
+      btnQuitar.style.border = 'none';
+      btnQuitar.style.borderRadius = '5px';
+      btnQuitar.style.padding = '5px 10px';
+      btnQuitar.style.cursor = 'pointer';
+      btnQuitar.onclick = function() {
+        productosCarrito.splice(index, 1); // elimina el producto del array
+        contador--; // disminuye el contador
+        document.getElementById('contador').innerText = contador;
+        document.querySelector('.carrito').click(); // recarga la lista del carrito
+      };
+
+      li.appendChild(img);
+      li.appendChild(nombreText);
+      li.appendChild(btnQuitar);
+      lista.appendChild(li);
+    });
+  }
+  document.getElementById('modalCarrito').style.display = 'block';
+  document.getElementById('formularioCliente').style.display = 'none';
+  document.getElementById('metodosPago').style.display = 'none';
+  document.getElementById('mensajePago').innerText = '';
+};
+
+  </script>
+</body>
+</html>

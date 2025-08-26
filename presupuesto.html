@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Presupuesto | TecnoVisión S.A.</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+      background-color: #f5f5f5;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    fieldset {
+      border: none;
+      margin-bottom: 20px;
+    }
+    legend {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .extras label {
+      display: block;
+      margin: 5px 0;
+    }
+    #total {
+      background: #e0e0e0;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px 20px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Formulario de Presupuesto</h1>
+
+<!-- CAMBIO PRINCIPAL: Se agrega action de Formspree con tu correo -->
+<form id="presupuestoForm" action="https://formspree.io/f/mwkayrkj" method="POST" novalidate>
+  <!-- DATOS DE CONTACTO -->
+  <fieldset>
+    <legend>Datos de contacto</legend>
+
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="Nombre" maxlength="15" required />
+
+    <label for="apellidos">Apellidos:</label>
+    <input type="text" id="apellidos" name="Apellidos" maxlength="40" required />
+
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="Telefono" maxlength="9" required />
+
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="Correo" required />
+  </fieldset>
+
+  <!-- PRESUPUESTO -->
+  <fieldset>
+    <legend>Presupuesto</legend>
+
+    <label for="producto">Producto:</label>
+    <select id="producto" name="Producto" required>
+      <option value="" disabled selected>Seleccione un producto</option>
+      <option value="500">Computadora - $500</option>
+      <option value="300">Laptop - $300</option>
+      <option value="150">Impresora - $150</option>
+      <option value="980">Laptop Profesional - $980</option>
+      <option value="220">Impresora Multifuncional - $220</option>
+      <option value="18">Mouse Inalámbrico - $18</option>
+      <option value="620">Laptop Estudiante - $620</option>
+      <option value="340">Impresora Láser - $340</option>
+      <option value="35">Audífonos Bluetooth - $35</option>
+      <option value="180">Monitor LED 24" - $180</option>
+      <option value="210">Monitor Samsung 27" - $210</option>
+      <option value="320">Monitor LG UltraWide 29" - $320</option>
+      <option value="150">Monitor HP 22" - $150</option>
+      <option value="45">Teclado Mecánico RGB - $45</option>
+      <option value="28">Teclado Inalámbrico Logitech - $28</option>
+      <option value="15">Teclado Numérico USB - $15</option>
+      <option value="32">Cámara Web HD - $32</option>
+      <option value="65">Cámara de Seguridad WiFi - $65</option>
+      <option value="55">Bocina Bluetooth JBL - $55</option>
+      <option value="48">Bocina Portátil Sony - $48</option>
+      <option value="39">Router TP-Link AC1200 - $39</option>
+      <option value="75">Router Mesh Xiaomi - $75</option>
+      <option value="29">Mouse Gamer Redragon - $29</option>
+      <option value="22">Mouse Vertical Ergonómico - $22</option>
+      <option value="410">Impresora Epson EcoTank - $410</option>
+      <option value="1200">Laptop Gamer ASUS - $1200</option>
+      <option value="210">Audífonos Sony WH-1000XM4 - $210</option>
+      <option value="12">Memoria USB 64GB - $12</option>
+      <option value="18">Hub USB 4 Puertos - $18</option>
+    </select>
+
+    <label for="plazo">Plazo (meses):</label>
+    <input type="number" id="plazo" name="Plazo" min="1" max="24" value="1" required />
+
+    <div class="extras">
+      <legend>Extras:</legend>
+      <label><input type="checkbox" class="extra" name="Asesoria" value="50" /> Asesoría personalizada ($50)</label>
+      <label><input type="checkbox" class="extra" name="Instalacion" value="30" /> Instalación ($30)</label>
+      <label><input type="checkbox" class="extra" name="Garantia" value="20" /> Garantía extendida ($20)</label>
+    </div>
+
+    <label for="total">Presupuesto total:</label>
+    <input type="text" id="total" name="Total" readonly value="$0" />
+  </fieldset>
+
+  <!-- CONDICIONES Y BOTONES -->
+  <fieldset>
+    <label><input type="checkbox" id="condiciones" required /> Acepto las condiciones de privacidad</label>
+  </fieldset>
+
+  <button type="submit">Enviar presupuesto</button>
+  <button type="reset">Restablecer formulario</button>
+</form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('presupuestoForm');
+  const producto = document.getElementById('producto');
+  const plazo = document.getElementById('plazo');
+  const extras = document.querySelectorAll('.extra');
+  const total = document.getElementById('total');
+
+  const nombreInput = document.getElementById('nombre');
+  const apellidosInput = document.getElementById('apellidos');
+  const telefonoInput = document.getElementById('telefono');
+
+  // 🔒 Bloqueo en tiempo real
+  nombreInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+  });
+
+  apellidosInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+  });
+
+  telefonoInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-8]/g, '');
+  });
+
+  // 💰 Cálculo de presupuesto
+  function calcularPresupuesto() {
+    let subtotal = parseInt(producto.value || 0);
+    let extrasTotal = 0;
+
+    extras.forEach(extra => {
+      if (extra.checked) {
+        extrasTotal += parseInt(extra.value);
+      }
+    });
+
+    let totalSinDescuento = subtotal + extrasTotal;
+
+    let descuento = 0;
+    const meses = parseInt(plazo.value || 0);
+
+    if (meses >= 6 && meses <= 12) {
+      descuento = 0.05; // 5%
+    } else if (meses > 12) {
+      descuento = 0.10; // 10%
+    }
+
+    const totalFinal = totalSinDescuento * (1 - descuento);
+    total.value = `$${totalFinal.toFixed(2)}`;
+  }
+
+  producto.addEventListener('change', calcularPresupuesto);
+  plazo.addEventListener('input', calcularPresupuesto);
+  extras.forEach(chk => chk.addEventListener('change', calcularPresupuesto));
+
+  // ✅ Validación final al enviar
+  form.addEventListener('submit', function (e) {
+    const nombre = nombreInput.value.trim();
+    const apellidos = apellidosInput.value.trim();
+    const telefono = telefonoInput.value.trim();
+    const email = document.getElementById('email').value.trim();
+    const condiciones = document.getElementById('condiciones').checked;
+
+    const soloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+    const soloNumeros = /^[0-8]{8}$/;
+    const emailValido = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!soloLetras.test(nombre) || nombre.length > 15) {
+      alert("Nombre inválido. Usa solo letras, máximo 15 caracteres.");
+      e.preventDefault();
+      return;
+    }
+
+    if (!soloLetras.test(apellidos) || apellidos.length > 40) {
+      alert("Apellidos inválidos. Usa solo letras, máximo 40 caracteres.");
+      e.preventDefault();
+      return;
+    }
+
+    if (!soloNumeros.test(telefono)) {
+      alert("Teléfono inválido. Debe tener exactamente 9 dígitos numéricos.");
+      e.preventDefault();
+      return;
+    }
+
+    if (!emailValido.test(email)) {
+      alert("Correo electrónico inválido.");
+      e.preventDefault();
+      return;
+    }
+
+    if (!condiciones) {
+      alert("Debe aceptar las condiciones de privacidad.");
+      e.preventDefault();
+      return;
+    }
+
+    alert("Presupuesto enviado correctamente.");
+  });
+});
+
+</script><script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function(){
+      emailjs.init("7I9raVdAvGGo-80Do"); // lo obtienes en tu panel de EmailJS
+  })();
+</script>
+
+
+</body>
+</html>
+
